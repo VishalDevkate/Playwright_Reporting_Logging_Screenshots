@@ -8,6 +8,39 @@ This project is a **Python Playwright automation framework** built with **Pytest
 - Docker + CI/CD matrix strategy
 - Slack/MS Teams notifications
 
+## 🚀 Quick Start
+
+1. **Clone the repo**
+   ```bash
+   git clone https://github.com/<your-username>/<your-repo>.git
+   cd <your-repo>
+
+2. **Create virtual environment (Python 3.11/3.12 recommended)**
+   ```bash
+   py -3.12 -m venv venv
+   venv\Scripts\activate
+   
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   playwright install --with-deps
+   
+4. **Run tests**
+   ```bash
+   pytest featureA_tests --env=qa --alluredir=allure-results/featureA
+   pytest featureB_tests --env=staging --alluredir=allure-results/featureB
+   pytest featureC_tests --env=prod --alluredir=allure-results/featureC
+   
+5. **Generate reports**
+   ```bash
+   python generate_index.py
+   allure generate allure-results -o allure-report --clean
+   allure open allure-report
+
+## CI/CD
+- Push to main → GitHub Actions runs matrix jobs per feature folder.
+- Results merged into one Allure dashboard and published to GitHub Pages.
+- Slack/MS Teams notifications sent with report links.
 ---
 
 ## 📂 Folder Structure
@@ -65,10 +98,9 @@ project-root/
 
 ---
 
-## 🚀 Usage
-
-### 1. Install Dependencies
-```bash
-pip install -r requirements.txt
-playwright install --with-deps
-
+🏆 Benefits
+- Clean separation of configs per feature folder.
+- Unified reporting dashboard for overall visibility.
+- Dockerized + CI/CD ready.
+- Rich Allure grouping (@allure.feature, @allure.story, @allure.severity).
+- Screenshots and traces attached to failed tests.
