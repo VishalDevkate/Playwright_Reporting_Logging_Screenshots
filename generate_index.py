@@ -2,8 +2,18 @@ import os
 from datetime import datetime
 
 REPORTS_DIR = "reports"
-index_path = os.path.join(REPORTS_DIR, "index.html")
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+run_dir = os.path.join(REPORTS_DIR, timestamp)
+os.makedirs(run_dir, exist_ok=True)
 
+# Move latest pytest-html report into timestamped folder
+if os.path.exists(os.path.join(REPORTS_DIR, "report.html")):
+    os.rename(
+        os.path.join(REPORTS_DIR, "report.html"),
+        os.path.join(run_dir, "report.html")
+    )
+
+# Build index.html with links to all past runs
 links = []
 for folder in sorted(os.listdir(REPORTS_DIR)):
     folder_path = os.path.join(REPORTS_DIR, folder)
@@ -28,5 +38,5 @@ html = f"""
 </html>
 """
 
-with open(index_path, "w") as f:
+with open(os.path.join(REPORTS_DIR, "index.html"), "w") as f:
     f.write(html)

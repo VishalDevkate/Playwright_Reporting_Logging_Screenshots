@@ -33,8 +33,10 @@ This project is a **Python Playwright automation framework** built with **Pytest
    
 5. **Generate reports**
    ```bash
+   mkdir merged-results
+   cp -r allure-results/*/* merged-results/
    python generate_index.py
-   allure generate allure-results -o allure-report --clean
+   allure generate merged-results -o allure-report --clean
    allure open allure-report
 
 ## CI/CD
