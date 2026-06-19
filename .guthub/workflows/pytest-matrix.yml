@@ -1,0 +1,41 @@
+name: Pytest Matrix
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder: [ "featureA_tests", "featureB_tests", "featureC_tests" ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pytest for ${{ matrix.folder }}
+        run: pytest -c ${{ matrix.folder }}/pytest.ini --alluredir=allure-results/${{ matrix.folder }}
+
+      - name: Generate Allure dashboard
+        run: allure generate allure-results -o allure-report --clean
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: reports
+
+      - name: Upload Allure dashboard artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: allure-report

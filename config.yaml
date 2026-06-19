@@ -1,0 +1,13 @@
+environments:
+  qa:
+    base_url: "https://the-internet.herokuapp.com"
+    username: "tomsmith"
+    password: "SuperSecretPassword!"
+  staging:
+    base_url: "https://staging.the-internet.herokuapp.com"
+    username: "staging_user"
+    password: "staging_pass"
+  prod:
+    base_url: "https://the-internet.herokuapp.com"
+    username: "prod_user"
+    password: "prod_pass"
